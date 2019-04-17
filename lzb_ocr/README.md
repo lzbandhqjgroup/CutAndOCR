@@ -14,3 +14,4 @@ def get_ocr_words(img_path):
 
 
 
+<http://ai.baidu.com/docs#/OCR-API/4ab3ea9e>
