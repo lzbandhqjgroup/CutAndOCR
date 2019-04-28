@@ -65,5 +65,35 @@ def analyse_lines(lines,image):
     cv2.waitKey(0)
 
 
+def make_area(x_lines,y_lines):
+    '''
+    返回一系列被直线框起来的封闭矩形区域
+    :param x_lines:
+    :param y_lines:
+    :return: list(rec)
+    '''
+    # 大概思路是这样，遍历xline，找到和两条以上yline相交的，再找到一条xline和其中两条yline都相交
+    x_joined = {}
+    y_joined = {}
+    for each_x in x_lines:
+        x_joined[each_x] = [each_y for each_y in y_lines if if_joined(each_x,each_y)]
+
+    for each_x,value in x_joined.iteritems():
+        if not len(value) >= 2:     #和2条以上y相交
+            continue
+        for another_x in x_joined:
+            if each_x == another_x:
+                continue
+            intersec = list(set(value).intersection(set(x_joined[another_x])))          #求交集
+            if len(intersec) >=2:       #相同的y条数大于2
+                #这里开始切出选中的矩形区域
+                None
+
+    return
+
+
+def if_joined(a,b):
+    #判断两条直线是否有焦点
+    None
 
 read_image("5958.jpg")
