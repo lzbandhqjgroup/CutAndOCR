@@ -87,13 +87,14 @@ def make_area(x_lines,y_lines):
             intersec = list(set(value).intersection(set(x_joined[another_x])))          #求交集
             if len(intersec) >=2:       #相同的y条数大于2
                 #这里开始切出选中的矩形区域
+                #each_x,another_x, intersec是选出的边框的线
                 None
 
     return
 
 
 def if_joined(a,b):
-    #判断两条直线是否有焦点
+    #判断两条直线是否有交点
     None
 
 read_image("5958.jpg")
