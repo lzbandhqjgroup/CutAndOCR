@@ -140,6 +140,16 @@ def make_area(x_lines,y_lines):
 
 def if_joined(a,b):
     #判断两条直线是否有交点
-    None
+    if a[0] == a[2] & b[1] == b[3]:
+        if (a[0] >= b[0] & a[0] <= b[2]) | (a[0] <= b[0] & a[0] >= b[2]):
+            if (b[1] >= a[1] & b[1] <= a[3]) | (b[1] <= a[1] & b[1] >= a[3]):
+                return True
+
+    if a[1] == a[3] & b[0] == b[2]:
+        if (a[1] >= b[1] & a[1] <= b[3]) | (a[1] <= b[1] & a[1] >= b[3]):
+            if (b[0] >= a[0] & b[0] <= a[2]) | (b[0] <= a[0] & b[0] >= a[2]):
+                return True
+
+    return False
 
 read_image("5958.jpg")
