@@ -47,18 +47,63 @@ def analyse_lines(lines,image):
                 y_lines.append([x1,y1,x2,y2])
             else:
                 x_lines.append([x1,y1,x2,y2])
+
+    #sort x_lines,y_lines
     x_lines.sort(key=(lambda x: x[1]))
+    y_lines.sort(key=(lambda x: x[0]))
     print("x_lines:")
     print(x_lines)
-    y_lines.sort(key=(lambda x: x[0]))
     print("y_lines:")
     print(y_lines)
     print("------")
 
-    for line in lines:
-        print(line)
-        for x1, y1, x2, y2 in line:
-            cv2.line(result, (x1, y1), (x2, y2), (0, 255, 0), 2)
+    #delete adjacent lines
+    x_filter_lines = []
+
+    print(len(x_lines))
+    for i in range(len(x_lines)):
+        if i + 1 < len(x_lines):
+            if abs(x_lines[i][0] - x_lines[i + 1][0]) < 30:
+                print(x_lines[i])
+                print(x_lines[i+1])
+                mid_x = int((x_lines[i + 1][0] + x_lines[i][0]) / 2)
+                mid_y1 = int((x_lines[i + 1][1] + x_lines[i][1]) / 2)
+                mid_y2 = int((x_lines[i + 1][3] + x_lines[i][3]) / 2)
+                x_filter_lines.append([mid_x, mid_y1, mid_x, mid_y2])
+            else:
+                x_filter_lines.append(x_lines[i])
+        else:
+            if abs(x_lines[i][0] - x_lines[i - 1][0]) > 30:
+                x_filter_lines.append(x_lines[i])
+
+    y_filter_lines = []
+    for i in range(len(y_lines)):
+        if i + 1 < len(y_lines):
+            if abs(y_lines[i][1] - y_lines[i + 1][1]) < 30:
+                mid_y = int((y_lines[i + 1][1] + y_lines[i][1]) / 2)
+                mid_x1 = int((y_lines[i + 1][0] + y_lines[i][0]) / 2)
+                mid_x2 = int((y_lines[i + 1][2] + y_lines[i][2]) / 2)
+                y_filter_lines.append([mid_x1, mid_y, mid_x2, mid_y])
+            else:
+                y_filter_lines.append(y_lines[i])
+        else:
+             if abs(y_lines[i][1] - y_lines[i - 1][1]) > 30:
+                y_filter_lines.append(y_lines[i])
+
+
+    print("x_filter_lines:")
+    print(x_filter_lines)
+    print("y_filter_lines:")
+    print(y_filter_lines)
+    print("------")
+
+    for line in x_filter_lines+y_filter_lines:
+        x1 = line[0]
+        y1 = line[1]
+        x2 = line[2]
+        y2 = line[3]
+        cv2.line(result, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
 
     cv2.imshow("rs", result)
 
